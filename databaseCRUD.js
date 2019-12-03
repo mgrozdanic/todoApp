@@ -16,7 +16,7 @@ const connect = () => {
 }
 
 
-module.exports = add = (user, res) => {
+const add = (user, res) => {
   if (con.state === 'disconnected') connect();
   var sql = "INSERT INTO users (firstName, lastName, username, email, password) VALUES " +
   "('" + user.firstName + "', '" + user.lastName + "', '" + user.username + "', '" + user.email + "', '" +
@@ -37,14 +37,28 @@ module.exports = add = (user, res) => {
     //res.send("User successfully added");
   });
 }
-/*
-exports.checkUsername = (username) => {
-    con.connect(function(err) {
+
+const checkCredentials = (user, res) => {
+    if (con.state === 'disconnected') connect();
+    var sql = "SELECT * FROM users WHERE '" + user.username + "' = username AND '" + user.password 
+    + "' = password";
+    con.query(sql, function(err, result) {
         if (err) throw err;
-        console.log("Connected!");
-        var sql = "SELECT * FROM users WHERE username =" + username;
-        con.query(sql, function (err, result) {
-          if (err) throw err;
-        });
-      });
-}*/
+        if (result.length === 0) {
+            res.send("Bad credentials.");
+            return;
+        }
+        if (user.username === result[0].username && user.password === result[0].password) {
+            user = {username: result[0].username, password: result[0].password, firstName: result[0].firstName,
+            lastName: result[0].lastName, email: result[0].email};
+
+            jwt.sign({user}, 'SUPER_SECRET_KEY', { expiresIn: 3600 },(err, token) => {
+                if(err) { console.log(err) }    
+                res.send(token);
+            });
+        }
+    })
+}
+
+exports.add = add;
+exports.checkCredentials = checkCredentials;

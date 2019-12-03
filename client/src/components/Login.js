@@ -5,18 +5,20 @@ import axios from 'axios';
 function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [user, setUser] = useState("");
     
     const login = async() => {
         let res = await(axios.post('http://localhost:9000/login', {username, password}));
         localStorage.setItem('token', JSON.stringify(res.data));
+        setUser(res.data);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        setUsername("");
-        setPassword("");
+        // setUsername("");
+        // setPassword("");
         login();
     }
-    return localStorage.getItem('token') === null ? (
+    return localStorage.getItem('token') === null || user === "" ? (
         <form onSubmit={handleSubmit}>
             <label>Username:</label><br/>
             <input type = "text" name = "username" value={username} 
