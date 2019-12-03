@@ -14,13 +14,17 @@ function Todos(){
             setTodos(data);
             console.log(data);
         })
-    }, [])
+    }, [setTodos])
+
+    const removeTodo = (id) => {
+        setTodos(todos.filter(todo => todo.id !== id))
+    }
 
     return localStorage.getItem('token') !== null ? (
         <div>
             <ul>
                 {todos.map(todo => 
-                    (<Todo key = {todo.id} todo={todo}/>)    
+                    (<Todo key = {todo.id} removeTodo={removeTodo} todo={todo}/>)    
                 )}
             </ul>
         </div>

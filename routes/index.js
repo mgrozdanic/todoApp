@@ -38,6 +38,19 @@ router.post('/addTodo', (req, res, next) => {
   }
 })
 
+router.delete('/delete/:id', (req, res, next) => {
+  if (req.headers && req.headers.authorization) {
+    var authorization = req.headers.authorization.split(' ')[1];
+    try {
+        decoded = jwt.verify(authorization, 'SUPER_SECRET_KEY');
+    } catch (e) {
+        return res.status(401).send('unauthorized');
+    }
+    var user = decoded.user.username;
+    add.deleteTodo(user, req.params.id, res);  
+  }
+})
+
 router.get('/todos', (req, res, next) => {
   var decoded;
   if (req.headers && req.headers.authorization) {
