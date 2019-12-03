@@ -23,4 +23,19 @@ router.post('/register', (req, res, next) => {
   //res.send('User successfully added.');
 })
 
+router.post('/addTodo', (req, res, next) => {
+  console.log(req.body);
+  var decoded;
+  if (req.headers && req.headers.authorization) {
+    var authorization = req.headers.authorization.split(' ')[1];
+    try {
+        decoded = jwt.verify(authorization, 'SUPER_SECRET_KEY');
+    } catch (e) {
+        return res.status(401).send('unauthorized');
+    }
+    var user = decoded.user.username;
+    add.addTodo(req.body, user, res);
+  }
+})
+
 module.exports = router;

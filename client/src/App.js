@@ -5,6 +5,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './App.css';
 import Todos from './components/Todos';
 import Register from './components/Register';
+import AddTodo from './components/AddTodo';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" component={Login}/>
         <Route path="/todos" component={Todos}/>
         <Route path="/register" component={Register}/>
+        <Route path="/addTodo" component={AddTodo}/>
       </Router>
     </div>
   );

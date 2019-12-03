@@ -38,6 +38,15 @@ const add = (user, res) => {
   });
 }
 
+const addTodo = (todo, user, res) => {
+    if (con.state === 'disconnected') connect();
+    var sql = "INSERT INTO todos (text, user) VALUES ('" + todo.text + "', '" + user + "')";
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send('Token successfully added.');
+    })
+}
+
 const checkCredentials = (user, res) => {
     if (con.state === 'disconnected') connect();
     var sql = "SELECT * FROM users WHERE '" + user.username + "' = username AND '" + user.password 
@@ -62,3 +71,4 @@ const checkCredentials = (user, res) => {
 
 exports.add = add;
 exports.checkCredentials = checkCredentials;
+exports.addTodo = addTodo;
