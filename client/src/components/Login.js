@@ -4,16 +4,16 @@ import axios from 'axios';
 function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    
     const login = async() => {
-        return await(axios.post('http://localhost:9000/login', {username, password}));
+        let res = await(axios.post('http://localhost:9000/login', {username, password}));
+        localStorage.setItem('token', JSON.stringify(res.data));
     }
     const handleSubmit = (e) => {
         e.preventDefault();
         setUsername("");
         setPassword("");
-        let user = login();
-        console.log(user);
-    
+        login();
     }
     return (
         <form onSubmit={handleSubmit}>
