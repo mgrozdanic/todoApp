@@ -8,10 +8,16 @@ function Register(){
     const [username, SetUsername] = useState("");
     const [email, SetEmail] = useState("");
     const [password, SetPassword] = useState("");
+    const [user, SetUser] = useState("");
 
     const register = async() => {
         let res = await axios.post("http://localhost:9000/register", {firstName, lastName, username, email, password});
-        alert(res.data);
+        if (res.data !== 'Username already exists.'){
+            localStorage.setItem('token', JSON.stringify(res.data));
+            SetUser(res.data);
+        } else {
+            alert(res.data);
+        }
     }
 
     const handleSubmit = (e) => {
@@ -24,7 +30,7 @@ function Register(){
         register();
     }
 
-    return localStorage.getItem('token') === null ? (
+    return localStorage.getItem('token') === null || user ==="" ? (
         <form onSubmit = {handleSubmit}>
             <label>First Name:</label><br/>
             <input type="text" name="firstName" value = {firstName} onChange={ e => SetFirstname(e.target.value)}/><br/>
