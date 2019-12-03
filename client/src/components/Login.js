@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 function Login(){
@@ -16,7 +16,7 @@ function Login(){
         setPassword("");
         login();
     }
-    return localStorage.getItem('token') !== null ? (
+    return localStorage.getItem('token') === null ? (
         <form onSubmit={handleSubmit}>
             <label>Username:</label><br/>
             <input type = "text" name = "username" value={username} 
