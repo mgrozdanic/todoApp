@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './App.css';
 import Todos from './components/Todos';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Router>
         <Route path="/login" component={Login}/>
         <Route path="/todos" component={Todos}/>
+        <Route path="/register" component={Register}/>
       </Router>
     </div>
   );

@@ -25,4 +25,8 @@ router.post('/login', (req, res, next) => {
   }
 })
 
+router.post('/register', (req, res, next) => {
+  res.send('User successfully added.');
+})
+
 module.exports = router;
