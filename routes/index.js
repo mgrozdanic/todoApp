@@ -38,4 +38,18 @@ router.post('/addTodo', (req, res, next) => {
   }
 })
 
+router.get('/todos', (req, res, next) => {
+  var decoded;
+  if (req.headers && req.headers.authorization) {
+    var authorization = req.headers.authorization.split(' ')[1];
+    try {
+        decoded = jwt.verify(authorization, 'SUPER_SECRET_KEY');
+    } catch (e) {
+        return res.status(401).send('unauthorized');
+    }
+    var user = decoded.user.username;
+    add.getTodos(user, res);
+  }
+})
+
 module.exports = router;

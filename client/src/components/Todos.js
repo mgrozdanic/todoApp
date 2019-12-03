@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import Todo from './Todo';
+import axios from 'axios';
 
 function Todos(){
-    //const [todos, setTodos] = useState("");
-    const todos = [
-        {id: 0, name: "Do the dishes"},
-        {id: 1, name: "Do the homework"},
-        {id: 2, name: "Watch Babylon Berlin"}
-    ];
+    const [todos, setTodos] = useState([]);
+
+    useEffect(() => {
+        let config = {
+            headers: {'Authorization': "bearer " + JSON.parse(localStorage.getItem('token'))}
+        };
+        axios.get('http://localhost:9000/todos', config).then(({data}) => {
+            setTodos(data);
+            console.log(data);
+        })
+    }, [])
+
     return localStorage.getItem('token') !== null ? (
         <div>
             <ul>

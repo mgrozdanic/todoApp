@@ -47,6 +47,15 @@ const addTodo = (todo, user, res) => {
     })
 }
 
+const getTodos = (user, res) => {
+    if (con.state === 'disconnected') connect();
+    var sql = "SELECT * FROM todos WHERE '" + user + "' = user";
+    con.query(sql, function(err, result){
+        if (err) throw err;
+        res.send(result);
+    });
+}
+
 const checkCredentials = (user, res) => {
     if (con.state === 'disconnected') connect();
     var sql = "SELECT * FROM users WHERE '" + user.username + "' = username AND '" + user.password 
@@ -72,3 +81,4 @@ const checkCredentials = (user, res) => {
 exports.add = add;
 exports.checkCredentials = checkCredentials;
 exports.addTodo = addTodo;
+exports.getTodos = getTodos;

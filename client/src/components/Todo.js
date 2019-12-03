@@ -5,7 +5,7 @@ function Todo({todo}){
     return (
         <li>
             <div>
-                <p>{todo.name}</p>
+                <p>{todo.text}</p>
             </div>
         </li>
     );
