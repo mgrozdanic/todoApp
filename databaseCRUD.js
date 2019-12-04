@@ -65,6 +65,15 @@ const deleteTodo = (user, id, res) => {
     });
 }
 
+const updateTodo = (id, text, res) => {
+    if (con.state === 'disconnected') connect();
+    var sql = "UPDATE todos SET text = '" + text + "' WHERE " + id + " = id";
+    con.query(sql, function(err, result){
+        if (err) throw err;
+        res.send('Todo successfully updated.');
+    });
+}
+
 const checkCredentials = (user, res) => {
     if (con.state === 'disconnected') connect();
     var sql = "SELECT * FROM users WHERE '" + user.username + "' = username AND '" + user.password 
@@ -92,3 +101,4 @@ exports.checkCredentials = checkCredentials;
 exports.addTodo = addTodo;
 exports.getTodos = getTodos;
 exports.deleteTodo = deleteTodo;
+exports.updateTodo = updateTodo;

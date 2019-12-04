@@ -51,6 +51,20 @@ router.delete('/delete/:id', (req, res, next) => {
   }
 })
 
+router.put('/change/:id', (req, res, next) => {
+  console.log(req.body);
+  if (req.headers && req.headers.authorization) {
+    var authorization = req.headers.authorization.split(' ')[1];
+    try {
+        decoded = jwt.verify(authorization, 'SUPER_SECRET_KEY');
+    } catch (e) {
+        return res.status(401).send('unauthorized');
+    }
+    var user = decoded.user.username;
+    add.updateTodo(req.params.id, req.body.text, res);
+  }
+})
+
 router.get('/todos', (req, res, next) => {
   var decoded;
   if (req.headers && req.headers.authorization) {

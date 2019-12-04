@@ -24,11 +24,15 @@ function Todos({setUser}){
         setTodos(todos.filter(todo => todo.id !== id))
     }
 
+    const updateTodos = (id, text) => {
+        setTodos(todos.map(todo => todo.id === id ? {id: id, text, user: localStorage.getItem('token')} : todo));
+    }
+
     return localStorage.getItem('token') !== null ? (
         <div>
             <ul>
                 {todos.map(todo => 
-                    (<Todo key = {todo.id} removeTodo={removeTodo} todo={todo}/>)    
+                    (<Todo key = {todo.id} removeTodo={removeTodo} updateTodos={updateTodos} todo={todo}/>)    
                 )}
             </ul>
         </div>
