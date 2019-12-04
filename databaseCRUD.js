@@ -40,7 +40,9 @@ const add = (user, res) => {
 
 const addTodo = (todo, user, res) => {
     if (con.state === 'disconnected') connect();
-    var sql = "INSERT INTO todos (text, user) VALUES ('" + todo.text + "', '" + user + "')";
+    var sql = "INSERT INTO todos (text, description, priority, done, user) VALUES ('" + 
+    todo.text + "', '" + todo.description + "', '" + todo.priority + "', " + todo.done + ", '" + user + "')";
+    
     con.query(sql, function(err, result) {
         if (err) throw err;
         res.send('Token successfully added.');
@@ -65,9 +67,10 @@ const deleteTodo = (user, id, res) => {
     });
 }
 
-const updateTodo = (id, text, res) => {
+const updateTodo = (id, todo, res) => {
     if (con.state === 'disconnected') connect();
-    var sql = "UPDATE todos SET text = '" + text + "' WHERE " + id + " = id";
+    var sql = "UPDATE todos SET text = '" + todo.text + "', description = '" + todo.description + 
+    "', priority = '" + todo.priority + "', done = " + todo.done + " WHERE " + id + " = id";
     con.query(sql, function(err, result){
         if (err) throw err;
         res.send('Todo successfully updated.');

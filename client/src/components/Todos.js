@@ -24,8 +24,8 @@ function Todos({setUser}){
         setTodos(todos.filter(todo => todo.id !== id))
     }
 
-    const updateTodos = (id, text) => {
-        setTodos(todos.map(todo => todo.id === id ? {id: id, text, user: localStorage.getItem('token')} : todo));
+    const updateTodos = (id, newTodo) => {
+        setTodos(todos.map(todo => todo.id === id ? {id: id, ...newTodo, user: localStorage.getItem('token')} : todo));
     }
 
     return localStorage.getItem('token') !== null ? (

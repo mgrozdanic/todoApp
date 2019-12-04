@@ -34,6 +34,7 @@ router.post('/addTodo', (req, res, next) => {
         return res.status(401).send('unauthorized');
     }
     var user = decoded.user.username;
+    console.log(req.body);
     add.addTodo(req.body, user, res);
   }
 })
@@ -61,7 +62,7 @@ router.put('/change/:id', (req, res, next) => {
         return res.status(401).send('unauthorized');
     }
     var user = decoded.user.username;
-    add.updateTodo(req.params.id, req.body.text, res);
+    add.updateTodo(req.params.id, req.body, res);
   }
 })
 
