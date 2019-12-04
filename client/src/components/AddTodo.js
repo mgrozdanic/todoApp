@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-function AddTodo(){
+function AddTodo({setUser}){
     const [text, setText] = useState("");
 
     const saveTodo = async() => {

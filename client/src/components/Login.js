@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-function Login(){
+function Login({setUser}){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState("");
+    //const [user, setUser] = useState("");
     
     const login = async() => {
         let res = await(axios.post('http://localhost:9000/login', {username, password}));
@@ -22,7 +22,7 @@ function Login(){
         // setPassword("");
         login();
     }
-    return localStorage.getItem('token') === null || user === "" ? (
+    return localStorage.getItem('token') === null ? (
         <form onSubmit={handleSubmit}>
             <label>Username:</label><br/>
             <input type = "text" name = "username" value={username} 

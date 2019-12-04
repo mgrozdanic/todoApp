@@ -2,19 +2,19 @@ import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-function Register(){
+function Register({setUser}){
     const [firstName, SetFirstname] = useState("");
     const [lastName, SetLastname] = useState("");
     const [username, SetUsername] = useState("");
     const [email, SetEmail] = useState("");
     const [password, SetPassword] = useState("");
-    const [user, SetUser] = useState("");
+    //const [user, SetUser] = useState("");
 
     const register = async() => {
         let res = await axios.post("http://localhost:9000/register", {firstName, lastName, username, email, password});
         if (res.data !== 'Username already exists.'){
             localStorage.setItem('token', JSON.stringify(res.data));
-            SetUser(res.data);
+            setUser(res.data);
         } else {
             alert(res.data);
         }
@@ -30,7 +30,7 @@ function Register(){
         register();
     }
 
-    return localStorage.getItem('token') === null || user ==="" ? (
+    return localStorage.getItem('token') === null ? (
         <form onSubmit = {handleSubmit}>
             <label>First Name:</label><br/>
             <input type="text" name="firstName" value = {firstName} onChange={ e => SetFirstname(e.target.value)}/><br/>
